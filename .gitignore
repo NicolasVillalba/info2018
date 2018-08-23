@@ -1,2 +1,13 @@
+# IntelliJ project files 
+*.iml
+*.iws
+*.ipr
 .idea/
 .test/
+
+# eclipse project file
+.settings/
+.classpath
+.project
+
+/target/
