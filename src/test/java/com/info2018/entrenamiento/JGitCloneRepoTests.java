@@ -1,49 +1,37 @@
 package com.info2018.entrenamiento;
 
 import static org.junit.Assert.*;
-
-import org.eclipse.jgit.api.ListBranchCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.lib.Ref;
 import org.hamcrest.CoreMatchers;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Description;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.eclipse.jgit.api.Git;
 import org.apache.commons.io.FileUtils;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class JGitCloneRepoTests {
 
-    private Git repo;
+    private static Git api;
 
-    @Before
-    public void setUp(){
-
-    }
-
-    @Test
-    public void cloneRepo() throws GitAPIException {
+    @BeforeClass
+    public static void cloneRepo() throws GitAPIException {
         //cloning the repo
-        this.repo = Git.cloneRepository()
+        api = Git.cloneRepository()
                 .setURI("https://github.com/yogonza524/info2018.git")
                 //folder where the repo will be cloned that also is ignored by the CVS in place
                 .setDirectory(new File("~/IdeaProjects/info2018/.test"))
                 .call(); //throws GitAPIException
 
-        //asserting if the status command contains the given string  this.repo.status().call().isClean()
-       Assert.assertThat(
-                this.repo.checkout().setName("master").call().getName(),
-                CoreMatchers.containsString("master")
-        );
+    }
 
+    @Test
+    public void verifyClonedRepo() throws GitAPIException {
+        //Git git = new Git(this.api.getRepository());
        /*
        *
        * "working directory clean" means all the files in the current directory are being
@@ -52,19 +40,26 @@ public class JGitCloneRepoTests {
        * "Untracked files:", you may need to add one or more untracked files.
        *
        * */
-
-       assertTrue(this.repo.status().call().isClean());
-
-       /*List<Ref> listRefsBranches = this.repo.branchList().setListMode(ListBranchCommand.ListMode.ALL).call();
-       for (Ref refBranch : listRefsBranches) {
-           System.out.println("Branch : " + refBranch.getName());
-       }*/
-       //assertEquals(listRefsBranches.contains(), true);
+       assertTrue(this.api.status().call().isClean());
     }
 
-    @After
-    public void cleanUp() throws IOException {
-        this.repo = null;
+    @Test
+    public void checkoutMasterBranch() throws GitAPIException {
+        //asserting if the status command contains the given string
+        Assert.assertThat(
+                this.api.checkout().setName("master").call().getName(),
+                CoreMatchers.containsString("master")
+        );
+    }
+
+    @Test
+    @Ignore
+    public void showBranchCommandMaster() {
+
+    }
+
+    @AfterClass
+    public static void cleanUp() throws IOException {
         //erase de content of the folder
         FileUtils.cleanDirectory(new File("~/IdeaProjects/info2018/.test"));
     }
