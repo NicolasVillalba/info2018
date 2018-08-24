@@ -1,11 +1,13 @@
 package com.info2018.generics;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Docena<T> {
+	
     private Integer pos = 0;
-    private T[] storage = (T[]) new Object[12];
+    
+    @SuppressWarnings("unchecked")
+	private T[] storage = (T[]) new Object[12];
 
     public T get(Integer k) {
         return this.storage[k];
