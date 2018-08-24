@@ -1,9 +1,11 @@
 package com.info2018.elements;
 
+import com.info2018.generics.Countable;
 import lombok.Getter;
 
 @Getter
-public class Huevo implements Comestible {
+public class Huevo implements Countable, Comestible {
+
     private Size tamano;
     private Color color;
     private Boolean dobleYema;
@@ -22,7 +24,7 @@ public class Huevo implements Comestible {
     
 	@Override
 	public String getType() {
-		return "Huevos de gallina";
+        return "Huevos de gallina";
 	}
 	
 	public enum Size {

@@ -2,7 +2,7 @@ package com.info2018.generics;
 
 import java.util.Arrays;
 
-public class Docena<T> {
+public class Docena<T extends Countable> {
 	
     private Integer pos = 0;
     
@@ -13,10 +13,20 @@ public class Docena<T> {
         return this.storage[k];
     }
 
-    public void add(T element){
-        if(pos > 12) return;
-        this.storage[pos] = element;
-        pos++;
+    public Docena add(T element){
+        if(pos < 12){
+            this.storage[pos] = element;
+            pos++;
+        }
+        return this;
+    }
+
+    public Integer placesLeft(){
+        return 12 - this.pos;
+    }
+
+    public Boolean anyAvailablePlace() {
+        return this.pos <= 11;
     }
 
     @Override
