@@ -1,21 +1,25 @@
 package com.info2018.generics;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Docena<T extends Countable> {
+public class Dozen<T extends Countable> {
 	
     private Integer pos = 0;
-    
-    @SuppressWarnings("unchecked")
-	private T[] storage = (T[]) new Object[12];
 
-    public T get(Integer k) {
-        return this.storage[k];
+	private List<T> storage;
+
+	public Dozen() {
+	    this.storage = new ArrayList<>();
     }
 
-    public Docena add(T element){
+    public T get(Integer k) {
+        return this.storage.get(k);
+    }
+
+    public Dozen<T> add(T element){
         if(pos < 12){
-            this.storage[pos] = element;
+            this.storage.add(element);
             pos++;
         }
         return this;
@@ -32,7 +36,7 @@ public class Docena<T extends Countable> {
     @Override
     public String toString() {
         return "Docena{" +
-                "storage=" + Arrays.toString(storage) +
+                "storage=" + this.storage.toString() +
                 '}';
     }
 }
