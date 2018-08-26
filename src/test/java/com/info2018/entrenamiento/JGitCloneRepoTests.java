@@ -24,7 +24,7 @@ public class JGitCloneRepoTests {
         api = Git.cloneRepository()
                 .setURI("https://github.com/yogonza524/info2018.git")
                 //folder where the repo will be cloned that also is ignored by the CVS in place
-                .setDirectory(new File("~/IdeaProjects/info2018/.test"))
+                .setDirectory(new File("test"))
                 .call(); //throws GitAPIException
 
     }
@@ -61,6 +61,6 @@ public class JGitCloneRepoTests {
     @AfterClass
     public static void cleanUp() throws IOException {
         //erase de content of the folder
-        FileUtils.cleanDirectory(new File("~/IdeaProjects/info2018/.test"));
+        FileUtils.cleanDirectory(new File("test"));
     }
 }
