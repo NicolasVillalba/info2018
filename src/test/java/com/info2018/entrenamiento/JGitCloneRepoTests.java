@@ -21,7 +21,7 @@ public class JGitCloneRepoTests {
     @BeforeClass
     public static void cloneRepo() throws GitAPIException {
         //cloning the repo
-        api = Git.cloneRepository()
+    	JGitCloneRepoTests.api = Git.cloneRepository()
                 .setURI("https://github.com/yogonza524/info2018.git")
                 //folder where the repo will be cloned that also is ignored by the CVS in place
                 .setDirectory(new File("test"))
@@ -40,14 +40,14 @@ public class JGitCloneRepoTests {
        * "Untracked files:", you may need to add one or more untracked files.
        *
        * */
-       assertTrue(this.api.status().call().isClean());
+       assertTrue(JGitCloneRepoTests.api.status().call().isClean());
     }
 
     @Test
     public void checkoutMasterBranch() throws GitAPIException {
         //asserting if the status command contains the given string
         Assert.assertThat(
-                this.api.checkout().setName("master").call().getName(),
+        		JGitCloneRepoTests.api.checkout().setName("master").call().getName(),
                 CoreMatchers.containsString("master")
         );
     }
